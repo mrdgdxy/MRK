@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        
+        <link rel="stylesheet" href="css/foundation.css" />
+        <title>Hello World</title>
+    </head>
+    <body>
+    <!-- Menus shown on mobile -->
+    <div class="off-canvas-wrap" data-offcanvas>
+        <div class="inner-wrap">
+            <div class="hidden-for-medium-up">
+                <div class="fixed">
+                    <nav class="tab-bar">
+                        <section class="left-small">
+                            <a class="left-off-canvas-toggle menu-icon" href="#"><span></span></a>
+                        </section>
+                        <section class="middle tab-bar-section">
+                            <h1 class="title">Test Kinvey</h1>
+                        </section>
+                    </nav>
+                </div>
+                <br> <br>
+            </div>
+            <aside class="left-off-canvas-menu">
+                <ul class="off-canvas-list">
+                    <li><label id="label_language"></label></li>
+                    <li><a href="#" >Français</a></li>
+                    <li><a href="#" >English</a></li>
+                </ul>
+            </aside>
+            <!-- Main content -->
+            <section class="main-section">
+            
+                            <div class="row">
+                        <dl class="accordion" data-accordion>
+                            <dd class="accordion-navigation">
+                                <a href="#panel1"><b>1.Test Push Notification</b></a>
+                                <div id="panel1" class="content">Use case : Send a push notification to the user with certain contents predefined.
+                                    <button class="radius button expand" id="register">Register for Push</button>
+                                    <button class="radius button expand" id="unregister">Unregister from Push</button>
+                                    <div>Status: <span id="status">not registered.</span></div>
+                                </div>
+                            </dd>
+                            <dd class="accordion-navigation">
+                                <a href="#panel2"><b>2.Test Offline Data Sync</b></a>
+                                <div id="panel2" class="content">Use case : Display user data when the network connection is not available 
+                                <hr>
+                                <div><b>Kinvey</b></div>
+                                <div id="datawithkinvey"></div>
+                                <hr>
+                                <div><b>No Kinvey</b></div>
+                                <div id="datawithoutkinvey"></div>
+                                <hr>
+                                <button class="radius button expand" id="getdata">Get data</button>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+            </section>
+            <a class="exit-off-canvas"></a>
+        </div>
+    </div>
+        <script type="text/javascript" src="phonegap.js"></script>
+        <!-- JQuery2.1 JS -->
+        <script src="js/jquery.js"></script>
+        <!-- Foundation JS plugins dependencies -->
+        <script src="js/foundation.js"></script>
+        <script src="js/foundation.accordion.js"></script>
+        <script src="js/foundation.offcanvas.js"></script>
+
+        <script src="PushNotification.js"></script>
+        <script src="https://da189i1jfloii.cloudfront.net/js/kinvey-phonegap-1.1.9.min.js"></script>
+
+        <!-- Add scripts here. -->
+        <script src="js/index.js"></script>
+        <script src="js/push.js"></script>
+        <script type="text/javascript">
+            $(document).foundation(); 
+            app.initialize();
+        </script>
+    </body>
+</html>
