@@ -1,0 +1,101 @@
+{
+    "ProposeResponse": {
+        "interactionId": {
+            "type": "xsd:string",
+            "content": 0
+        },
+        "propositions": {
+            "type": "ns:Element",
+            "encodingStyle": "http://xml.apache.org/xml-soap/literalxml",
+            "propositions": {
+                "proposition": [
+                    {
+                        "id": 1667276079,
+                        "offer-id": 1667276079,
+                        "offerSpace-id": 1594582317,
+                        "weight": 10,
+                        "rank": 1,
+                        "code": "client-demo-offer-vin",
+                        "label": "Client Demo Offer - VIN",
+                        "startDate": "",
+                        "validityDate": "",
+                        "endDate": "",
+                        "usedOffer": "",
+                        "idBrandList_off": "",
+                        "xmlRepresentation": {
+                            "desMkt": {},
+                            "deskEli": {},
+                            "deskLeg": {},
+                            "pictureDetail": {},
+                            "pictureGen": {}
+                        },
+                        "category": {
+                            "type": ""
+                        },
+                        "context": {
+                            "weightExpr": 10
+                        },
+                        "newOffer": "false"
+                    },
+                    {
+                        "id": 1638969891,
+                        "offer-id": 1638969891,
+                        "offerSpace-id": 1594582317,
+                        "weight": 2,
+                        "rank": 2,
+                        "code": 99999,
+                        "label": "Test Pmr offre",
+                        "startDate": "2014-10-09 22:00:00.000Z",
+                        "validityDate": "2015-12-30 23:00:00.000Z",
+                        "endDate": "2015-04-24 22:00:00.000Z",
+                        "usedOffer": "",
+                        "idBrandList_off": "",
+                        "xmlRepresentation": {
+                            "desMkt": "test",
+                            "deskEli": "test",
+                            "deskLeg": "HEHEHE PMR",
+                            "pictureDetail": "http://renault-dev.neolane.net/res/renault_dev/f3fce2706b893409a44f35402bded233.jpg",
+                            "pictureGen": "http://renault-dev.neolane.net/res/renault_dev/f3fce2706b893409a44f35402bded233.jpg"
+                        },
+                        "category": {
+                            "type": ""
+                        },
+                        "context": {
+                            "weightExpr": 2
+                        },
+                        "newOffer": "false"
+                    },
+                    {
+                        "id": 1666915111,
+                        "offer-id": 1666915111,
+                        "offerSpace-id": 1594582317,
+                        "weight": 2,
+                        "rank": 3,
+                        "code": "DLBi-Vin-Offer-001",
+                        "label": "DLBi Vin Offer 1",
+                        "startDate": "2014-11-23 23:00:00.000Z",
+                        "validityDate": "",
+                        "endDate": "2015-05-30 22:00:00.000Z",
+                        "usedOffer": "",
+                        "idBrandList_off": "",
+                        "xmlRepresentation": {
+                            "desMkt": "Marketing Description\nThese is a <b>bulleted list</b>\n<ol>\n  <li>Hi</li>\n</ol>",
+                            "deskEli": "Les données �  caractère personnel qui vous sont demandées sont indispensables au\ntraitement de votre demande et �  la gestion de votre relation commerciale avec \nRenault en vue de vous fournir un service de qualité adapté �  vos besoins. Elles\nsont destinées �  Renault, �  ses filiales, aux membres de son réseau commercial \net aux sociétés en relation avec Renault et son réseau commercial. Ces données \nsont confidentielles et peuvent également être conservées afin de respecter les\nobligations légales et règlementaires. Conformément �  la loi Informatique et \nLibertés, vous disposez d'un droit d'accès et de rectification des données vous \nconcernant ainsi que du droit de vous opposer �  ce que les données vous \nconcernant fassent l'objet dun traitement informatique, en adressant un courrier\n�  Renault Service Relation Client - 92109 Boulogne Billancourt Cedex.",
+                            "deskLeg": "test offer",
+                            "pictureDetail": "https://author.qa.heliosalliance.net/content/dam/Renault/UK/Offers/Headlight_Replacement.jpg",
+                            "pictureGen": "https://author.qa.heliosalliance.net/content/dam/Renault/UK/Offers/Headlight_Replacement.jpg"
+                        },
+                        "category": {
+                            "type": ""
+                        },
+                        "context": {
+                            "weightExpr": 2
+                        },
+                        "newOffer": "false"
+                    }
+                ]
+            }
+        },
+        "uuid": {}
+    }
+}
