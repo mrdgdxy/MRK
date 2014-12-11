@@ -62,6 +62,10 @@ var app = {
     	$("#statuslabel").html("activeUsererror");
     });
     
+    promise.then(function() {
+    	getpropositions();
+      });
+    
     // Automated control 
     // Switch application state when the on- and offline events fire.
     $(window).on({
@@ -71,29 +75,32 @@ var app = {
     
     // Add the book.
     function addpropositions(data){
-	$("#statuslabel").html("loading");
-	var dat = { };
+	$("#statuslabel").html("clean propositions");
+	Kinvey.DataStore.clean('propositions');
+	$("#statuslabel").html("adding propositions");
  	$.each(data, function( i, value ) {
+ 		var dat = { };
  		dat["id"] = data[i].id;
+ 		dat["label"] = data[i].label;
+ 	    Kinvey.DataStore.save('propositions', dat).then(function() {
+ 	    	$("#statuslabel").html("add propositions success");
+ 	    }, function(error) {
+ 	    	$("#statuslabel").html("add propositions error");
+ 	    });
  	});
-    
-    Kinvey.DataStore.save('propositions', dat).then(function() {
-    	$("#statuslabel").html("add propositions success");
-    }, function(error) {
-    	$("#statuslabel").html("add propositions error");
-    });
+ 	$("#statuslabel").html("");
+ 	//Call method to get data
+ 	getpropositions();
     }
     
     function getpropositions(){
     	$("#statuslabel").html("loading");
-    	var content = {};
-        Kinvey.DataStore.get('propositions', content).then(function(propositions) {
-            // Update UI.
-            content = propositions.map(function(book, index) {
-	            	$.each(content, function( i, value ) {
- 	            		$("#datawithkinvey").append("<br>Proposition id"+i+": "+value[i].id);
- 	            	});
-            });
+        Kinvey.DataStore.find('propositions').then(function(propositions) {
+//            var dataToStr=JSON.stringify(propositions);
+//            $("#seedata").html(dataToStr);
+        	$.each(propositions, function( i, value ) {
+        		$("#datawithkinvey").append("<br>"+value.id+": "+value.label);
+        	});
             $("#statuslabel").html("get propositions success");
           }, function(error) {
         	$("#statuslabel").html("get propositions error");
@@ -104,7 +111,6 @@ var app = {
         	//Clear the content of both 2 areas
     		$("#datawithkinvey").empty();
     		$("#datawithoutkinvey").empty();
-    		
     		//Use normal ajax to load data
  	        $.ajax({
  	            dataType: "json",
@@ -112,13 +118,11 @@ var app = {
  	            success: function(msg){
  	                var data = msg.ProposeResponse.propositions.propositions.proposition;
  	            	$.each(data, function( i, value ) {
-     	            	//Get all the proposition ids
- 	            		$("#datawithoutkinvey").append("<br>Proposition id"+i+": "+data[i].id);
+     	            	//Get proposition info
+ 	            		$("#datawithoutkinvey").append("<br>"+data[i].id+": "+data[i].label);
  	            	});
- 	            	//Call method to add data
  	            	addpropositions(data);
- 	            	getpropositions();
- 	 			},
+ 	            },
               error: function (XMLHttpRequest, textStatus, errorThrown) { 
                   alert("Please check your network connection!"); 
              	}
