@@ -31,7 +31,18 @@ var app = {
   bindEvents: function() {
     // Bind any events that are required on startup. Common events are: `load`,
     // `deviceready`, `offline`, and `online`.
-    document.addEventListener('deviceready', app.onDeviceReady, false);
+    document.addEventListener('deviceready', app.onDeviceReady, false);   
+    // On/offline hooks.
+    document.addEventListener('offline', Kinvey.Sync.offline);
+    document.addEventListener('online', function() {
+    	  //var promise = Kinvey.Sync.execute();
+    	  $("#statuslabel").html("loading");
+      Kinvey.Sync.online().then(function() {
+    	  $("#statuslabel").html("online");
+      }, function(error) {
+    	  $("#statuslabel").html("error");
+      });
+    });
   },
 
   /**
@@ -46,8 +57,8 @@ var app = {
       appKey    : 'kid_Z1jSBhbMP',
       appSecret : 'fd0dcfe909224249bc19a013b1dcf79f',
       sync      : {
-          enable : true,
-          online : navigator.onLine// The initial application state.
+          enable : true
+//          online : navigator.onLine// The initial application state.
       }
     });
     
@@ -62,44 +73,29 @@ var app = {
     	$("#statuslabel").html("activeUsererror");
     });
     
-    promise.then(function() {
-    	getpropositions();
-      });
-    
-    // Automated control 
-    // Switch application state when the on- and offline events fire.
-    $(window).on({
-        offline : Kinvey.Sync.offline,
-        online  : Kinvey.Sync.online
-    });
-    
-    // Add the book.
+    // Add propositions.
     function addpropositions(data){
-	$("#statuslabel").html("clean propositions");
-	Kinvey.DataStore.clean('propositions');
 	$("#statuslabel").html("adding propositions");
  	$.each(data, function( i, value ) {
  		var dat = { };
- 		dat["id"] = data[i].id;
+ 		dat["_id"] = data[i].id;
  		dat["label"] = data[i].label;
- 	    Kinvey.DataStore.save('propositions', dat).then(function() {
+ 	    Kinvey.DataStore.save('propositions', dat, {offline : true, refresh : true}).then(function() {
  	    	$("#statuslabel").html("add propositions success");
  	    }, function(error) {
  	    	$("#statuslabel").html("add propositions error");
  	    });
  	});
- 	$("#statuslabel").html("");
- 	//Call method to get data
  	getpropositions();
     }
     
+    //Get propositions from local or network
     function getpropositions(){
     	$("#statuslabel").html("loading");
-        Kinvey.DataStore.find('propositions').then(function(propositions) {
-//            var dataToStr=JSON.stringify(propositions);
-//            $("#seedata").html(dataToStr);
+    	var query = new Kinvey.Query();
+        Kinvey.DataStore.find('propositions',query,{offline : true, refresh : true}).then(function(propositions) {
         	$.each(propositions, function( i, value ) {
-        		$("#datawithkinvey").append("<br>"+value.id+": "+value.label);
+        		$("#datawithkinvey").append("<br>"+value.label);
         	});
             $("#statuslabel").html("get propositions success");
           }, function(error) {
@@ -108,26 +104,28 @@ var app = {
     }
 
 	  $("#getdata").click(function(){
-        	//Clear the content of both 2 areas
-    		$("#datawithkinvey").empty();
-    		$("#datawithoutkinvey").empty();
-    		//Use normal ajax to load data
- 	        $.ajax({
- 	            dataType: "json",
- 	            url: "https://khajour-test.apigee.net/interactionpropose_vin_dev/propose?sessiontoken=fullsix%2Ffullsix&targetId=VF1JMSE0641295422%7CFRA&maxCount=3",
- 	            success: function(msg){
- 	                var data = msg.ProposeResponse.propositions.propositions.proposition;
- 	            	$.each(data, function( i, value ) {
-     	            	//Get proposition info
- 	            		$("#datawithoutkinvey").append("<br>"+data[i].id+": "+data[i].label);
- 	            	});
- 	            	addpropositions(data);
- 	            },
-              error: function (XMLHttpRequest, textStatus, errorThrown) { 
-                  alert("Please check your network connection!"); 
-             	}
-          });
-    	  });
+	    	//Clear the content of both 2 areas
+			$("#datawithkinvey").empty();
+			$("#datawithoutkinvey").empty();
+			//Use normal ajax to load data
+	        $.ajax({
+	            dataType: "json",
+	            url: "https://khajour-test.apigee.net/interactionpropose_vin_dev/propose?sessiontoken=fullsix%2Ffullsix&targetId=VF1JMSE0641295422%7CFRA&maxCount=3",
+	            success: function(msg){
+	                var data = msg.ProposeResponse.propositions.propositions.proposition;
+	            	$.each(data, function( i, value ) {
+	 	            	//Show proposition info
+	            		$("#datawithoutkinvey").append("<br>"+data[i].label);
+	            	});
+	            	addpropositions(data);
+	            },
+	          error: function (XMLHttpRequest, textStatus, errorThrown) { 
+	        	  //Call method to get data
+	   	    	  getpropositions();
+	   	    	  $("#statuslabel").html("Please check your network connection!");
+	         	}
+	      });
+		  });
 	  
 	  
   },
